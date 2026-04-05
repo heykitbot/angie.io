@@ -83,11 +83,13 @@ a {
   text-underline-offset: 2px;
   text-decoration-thickness: 4px;
   text-decoration-color: #db2777;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  transition: text-shadow 0.2s ease, color 0.2s ease;
 }
 
 a:hover {
   color: #db2777;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 8px rgba(219, 39, 119, 0.4);
 }
 
 .social {
