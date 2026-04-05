@@ -87,6 +87,7 @@ a {
 
 a:hover {
   color: #db2777;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 .social {
