@@ -1,0 +1,204 @@
+---
+import '../styles/global.css'
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>angie.io</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="layout">
+        <main>
+          <div class="content">
+            <div class="hero-header">
+              <div class="memoji">
+                <img src="/images/pfp-small.png" alt="Angie Merryweather" />
+              </div>
+
+              <h1>
+                Hiya, I'm Angie Merryweather <span class="wave">👋</span>
+              </h1>
+            </div>
+
+            <p>
+              I'm a freelance software engineer from Manchester, UK. I make stuff for the web, usually in TypeScript and React. I dig:
+            </p>
+
+            <ul>
+              <li>working with nice people</li>
+              <li>event driven architectures</li>
+              <li>DORA metrics</li>
+              <li>making the right thing (then making the thing right)</li>
+            </ul>
+
+            <p>
+              Oh, and who could forget <span id="whimsy-target" class="rainbow-whimsy">surprise and delight</span>? And delivering stakeholder value!! <span class="money-line" aria-hidden="true">📈 💸</span> I like those too.
+            </p>
+
+            <p>
+              You can contact me for work stuff via <a href="mailto:hi@angie.io">email</a> or the social links below.
+            </p>
+          </div>
+
+          <div class="social" aria-label="Social links">
+            <a href="https://github.com/angie" rel="nofollow noreferrer" target="_blank" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.4-1.34-1.77-1.34-1.77-1.1-.76.08-.74.08-.74 1.22.08 1.86 1.26 1.86 1.26 1.08 1.87 2.84 1.33 3.54 1.02.1-.8.43-1.34.78-1.65-2.66-.3-5.46-1.35-5.46-5.98 0-1.32.47-2.39 1.24-3.23-.12-.3-.54-1.53.12-3.18 0 0 1.01-.33 3.3 1.23a11.4 11.4 0 0 1 6 0c2.28-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.23 0 4.65-2.8 5.67-5.48 5.97.44.38.82 1.1.82 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5Z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/angie-merryweather/" rel="nofollow noreferrer" target="_blank" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3V9Zm7 0h3.84v1.64h.05c.53-1 1.84-2.05 3.79-2.05 4.05 0 4.8 2.7 4.8 6.2V21h-4v-5.5c0-1.3-.03-2.98-1.8-2.98-1.8 0-2.08 1.43-2.08 2.89V21h-4V9Z"/></svg>
+            </a>
+          </div>
+
+          <div class="whimsy-controls">
+            <button id="whimsy-btn" class="whimsy-link" aria-label="Add a little whimsy">Add a little whimsy?</button>
+            <span id="snap-back" class="snap-back" style="display:none"><span class="whimsy-divider">|</span> <button class="whimsy-link snap-back-btn">Snap back to reality</button></span>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // @ts-nocheck
+      const horrors = [
+        'ad tech', 
+        'NFT trading platforms', 
+        'petrochemical platforms', 
+        'software to enable more volatile fracking', 
+        'gambling platforms', 
+        'crypto ponzi schemes', 
+        'surveillance capitalism', 
+        'predatory lending apps',
+        'sending out TV license reminders',
+        'deepfake videos of Marge Simpson',
+        'those weird iOS games you see ads for while playing Subway Surfer'
+      ]
+      const btn = document.getElementById('whimsy-btn')
+      const target = document.getElementById('whimsy-target')
+      let animating = false
+      let whimsyMode = false
+
+      // Module-level cycler index to iterate horrors in original order
+      let _cyclerIndex = 0
+      function pickHorror() {
+        if (!horrors || horrors.length === 0) return ''
+        const item = horrors[_cyclerIndex % horrors.length]
+        _cyclerIndex = (_cyclerIndex + 1) % horrors.length
+        return item
+      }
+
+      function typeText(el, text, cb) {
+        let i = 0
+        el.textContent = ''
+        el.classList.add('typing')
+        const type = setInterval(() => {
+          el.textContent = text.slice(0, i + 1)
+          i++
+          if (i >= text.length) {
+            clearInterval(type)
+            el.classList.remove('typing')
+            if (cb) cb()
+          }
+        }, 35)
+      }
+
+      function backspaceText(el, cb) {
+        let text = el.textContent
+        const bs = setInterval(() => {
+          text = text.slice(0, -1)
+          el.textContent = text || '\u200B'
+          if (text.length === 0) {
+            clearInterval(bs)
+            if (cb) cb()
+          }
+        }, 20)
+      }
+
+      const snapBack = document.getElementById('snap-back')
+      const originalText = target.textContent
+
+      function transitionBtn(newLabel) {
+        btn.style.opacity = '0'
+        setTimeout(() => {
+          btn.textContent = newLabel
+          btn.style.opacity = '1'
+          snapBack.style.display = 'inline'
+          snapBack.style.opacity = '0'
+          setTimeout(() => { snapBack.style.opacity = '1' }, 50)
+        }, 300)
+      }
+
+      snapBack.querySelector('.snap-back-btn').addEventListener('click', () => {
+        if (animating) return
+        animating = true
+        const horrorEl = target.querySelector('.horror-word')
+        backspaceText(horrorEl, () => {
+          // backspace the prefix too
+          const striking = target.querySelector('span')
+          const prefix = 'working with 100x rockstars on '
+          striking.innerHTML = prefix
+          backspaceText(striking, () => {
+            typeText(striking, originalText, () => {
+              target.innerHTML = `<span>${originalText}</span>`
+              whimsyMode = false
+              animating = false
+              btn.textContent = 'Add a little whimsy?'
+              snapBack.style.opacity = '0'
+              setTimeout(() => { snapBack.style.display = 'none' }, 300)
+            })
+          })
+        })
+      })
+
+      btn.addEventListener('click', () => {
+        if (animating) return
+        animating = true
+
+        const span = target.querySelector('span') || target
+-        const replacement = `working with 100x rockstars on ${pickHorror()}.`
+-
+-        const horror = pickHorror()
++        // pick next horror from module-level cycler
++        const horror = pickHorror()
++        const replacement = `working with 100x rockstars on ${horror}.`
+
+        if (!whimsyMode) {
+          // first click — strikethrough original, then type the new prefix + horror
+          const original = span.textContent
+          target.innerHTML = `<span class="striking">${original}</span>`
+          const striking = target.querySelector('.striking')
+
+          setTimeout(() => {
+            striking.classList.add('struck')
+            setTimeout(() => {
+              backspaceText(striking, () => {
+                striking.classList.remove('striking', 'struck')
+                const prefix = 'working with 100x rockstars on '
+                typeText(striking, prefix, () => {
+                  // insert a separate span for just the horror word
+                  striking.innerHTML = `${prefix}<span class="horror-word"></span>`
+                  const horrorEl = striking.querySelector('.horror-word')
+                  typeText(horrorEl, horror, () => {
+                    whimsyMode = true
+                    animating = false
+                    transitionBtn('Imagine another horror?')
+                  })
+                })
+              })
+            }, 600)
+          }, 50)
+        } else {
+          // subsequent clicks — only backspace + retype the horror word
+          const horrorEl = target.querySelector('.horror-word')
+          backspaceText(horrorEl, () => {
+            typeText(horrorEl, horror, () => {
+              animating = false
+            })
+          })
+        }
+      })
+    </script>
+  </body>
+</html>

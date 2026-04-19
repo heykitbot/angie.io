@@ -1,5 +1,6 @@
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
 import memoji from "../images/memoji.png"
+import { nextFrom } from "../utils/cycler"
 
 export default function Index() {
   return (
@@ -17,7 +18,7 @@ export default function Index() {
             </div>
             <h1 className="font-bold text-4xl pt-2">
               Hiya, I'm Angie Merryweather{" "}
-              <span className="wave hover:wave">👋</span>
+              <span className="wave hover:wave">{nextFrom(["👋", "✋", "🤝"])}</span>
             </h1>
             <p>
               I'm a consultant staff software engineer specialising in
